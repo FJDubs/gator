@@ -1,0 +1,30 @@
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Go build/cache
+bin/
+build/
+dist/
+*.out
+.coverage/
+coverage.out
+.cache/
+
+# Env/secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Logs/temp
+*.log
+tmp/
+
+# Database/runtime (if you create local files)
+data/
+*.db
+*.sqlite
+
