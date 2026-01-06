@@ -200,3 +200,22 @@ func middlewareLoggedIn(handler func(s *state, cmd command, user database.User) 
 		return handler(s, cmd, user)
 	}
 }
+
+func handlerUnfollow(s *state, cmd command, user database.User) error {
+	if len(cmd.args) < 1 {
+		return fmt.Errorf("the unfollow handler expects a single argument of a url to follow")
+	}
+	feed, err := s.db.GetFeedFromURL(context.Background(), cmd.args[0])
+	if err != nil {
+		return fmt.Errorf("URL does not match a feed: %v", err)
+	}
+	params := database.DeleteFeedFollowParams{
+		UserID: user.ID,
+		FeedID: feed.ID,
+	}
+	err = s.db.DeleteFeedFollow(context.Background(), params)
+	if err != nil {
+		return fmt.Errorf("issue deleting follow: %v", err)
+	}
+	return nil
+}
